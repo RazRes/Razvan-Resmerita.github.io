@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
+import { fmt } from '../data/content';
 import { Job } from '../data/cv.data';
+import { I18n } from '../i18n';
 
 @Component({
   selector: 'app-experience',
@@ -11,7 +13,7 @@ import { Job } from '../data/cv.data';
           <div class="when">
             <span>{{ job.period }}</span>
             @if (job.current) {
-              <span class="now">Now</span>
+              <span class="now">{{ ui().now }}</span>
             }
           </div>
           <div class="what">
@@ -35,7 +37,7 @@ import { Job } from '../data/cv.data';
     </ol>
     @if (jobs().length > initialCount) {
       <button class="btn toggle" type="button" (click)="toggle()" [attr.aria-expanded]="expanded()">
-        {{ expanded() ? 'Show less' : 'Show earlier experience (' + (jobs().length - initialCount) + ')' }}
+        {{ expanded() ? ui().showLess : earlierLabel() }}
       </button>
     }
   `,
@@ -144,7 +146,12 @@ import { Job } from '../data/cv.data';
 })
 export class Experience {
   readonly jobs = input.required<Job[]>();
+  private readonly i18n = inject(I18n);
+  protected readonly ui = computed(() => this.i18n.c().ui);
   protected readonly initialCount = 3;
+  protected readonly earlierLabel = computed(() =>
+    fmt(this.ui().showEarlier, { n: this.jobs().length - this.initialCount }),
+  );
   protected readonly expanded = signal(false);
   protected toggle(): void {
     this.expanded.update((v) => !v);

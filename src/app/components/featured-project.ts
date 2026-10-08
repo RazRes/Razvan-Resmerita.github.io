@@ -3,11 +3,15 @@ import {
   Component,
   ElementRef,
   afterNextRender,
+  computed,
+  inject,
   input,
   signal,
   viewChild,
 } from '@angular/core';
+import { fmt } from '../data/content';
 import { Project } from '../data/cv.data';
+import { I18n } from '../i18n';
 import { Icon } from './icon';
 
 /** Angle between neighbouring phones on the ring, in radians (~49°). */
@@ -37,10 +41,10 @@ const RING_STEP = 0.85;
         </div>
         <div class="actions">
           <a class="btn primary" [href]="project().url" target="_blank" rel="noopener">
-            Visit the website <app-icon name="external" [size]="16" />
+            {{ ui().visitWebsite }} <app-icon name="external" [size]="16" />
           </a>
           <a class="btn" [href]="project().appStoreUrl" target="_blank" rel="noopener">
-            <app-icon name="apple" /> Download on the App Store
+            <app-icon name="apple" /> {{ ui().appStore }}
           </a>
         </div>
       </div>
@@ -48,7 +52,7 @@ const RING_STEP = 0.85;
         class="showcase"
         role="region"
         aria-roledescription="carousel"
-        [attr.aria-label]="project().name + ' screenshots'"
+        [attr.aria-label]="carouselLabel()"
       >
         <div class="art">
           <span class="ring outer" aria-hidden="true"></span>
@@ -74,7 +78,7 @@ const RING_STEP = 0.85;
           <button
             class="arrow"
             type="button"
-            aria-label="Previous screenshot"
+            [attr.aria-label]="ui().prevShot"
             [disabled]="active() === 0"
             (click)="goTo(active() - 1)"
           >
@@ -86,7 +90,7 @@ const RING_STEP = 0.85;
                 type="button"
                 class="dot"
                 [class.on]="i === active()"
-                [attr.aria-label]="'Show screenshot ' + (i + 1) + ' of ' + project().screens.length"
+                [attr.aria-label]="shotLabel(i)"
                 [attr.aria-current]="i === active() ? 'true' : null"
                 (click)="goTo(i)"
               ></button>
@@ -95,7 +99,7 @@ const RING_STEP = 0.85;
           <button
             class="arrow"
             type="button"
-            aria-label="Next screenshot"
+            [attr.aria-label]="ui().nextShot"
             [disabled]="active() === project().screens.length - 1"
             (click)="goTo(active() + 1)"
           >
@@ -322,11 +326,20 @@ const RING_STEP = 0.85;
 })
 export class FeaturedProject {
   readonly project = input.required<Project>();
+  private readonly i18n = inject(I18n);
+  protected readonly ui = computed(() => this.i18n.c().ui);
+  protected readonly carouselLabel = computed(() =>
+    fmt(this.ui().carouselLabel, { name: this.project().name }),
+  );
   protected readonly active = signal(0);
   private readonly track = viewChild.required<ElementRef<HTMLElement>>('track');
 
   constructor() {
     afterNextRender(() => this.update());
+  }
+
+  protected shotLabel(index: number): string {
+    return fmt(this.ui().showShot, { n: index + 1, total: this.project().screens.length });
   }
 
   /** Places each slide on the 3D ring from its distance to the track centre. */

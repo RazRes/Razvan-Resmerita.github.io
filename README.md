@@ -1,4 +1,4 @@
-# Razvan Resmerita · Frontend Developer
+# Razvan Resmerita · Full Stack Developer
 
 **Live site → https://razres.github.io**
 
@@ -10,7 +10,7 @@ This repository is my personal portfolio and online CV, built with **Angular 21*
 
 | | |
 |---|---|
-| **Current role** | Frontend Developer @ LINKSOFT, Bucharest (Feb 2026 – present) |
+| **Current role** | Full Stack Developer @ LINKSOFT, Bucharest (Feb 2026 – present) |
 | **Experience** | Angular developer since 2019 (Turin → Bucharest) |
 | **Core stack** | Angular · TypeScript · RxJS · NgRx · SCSS |
 | **Growing into** | Power Apps (Canvas Apps) · Dynamics 365 · C# · .NET · Go |
@@ -19,7 +19,7 @@ This repository is my personal portfolio and online CV, built with **Angular 21*
 
 ## Experience
 
-- **Frontend Developer**, LINKSOFT (Feb 2026 – present): Angular features and bug fixes, a new Canvas App project, Power Apps and Dynamics 365.
+- **Full Stack Developer**, LINKSOFT (Feb 2026 – present): Angular features and bug fixes, a new Canvas App project, Power Apps and Dynamics 365.
 - **Angular Developer**, PlentyOne Development (May 2023 – Aug 2025): back-office platform on Angular 17/18, scalable components, code reviews and mentoring juniors.
 - **Angular Developer**, REI Development Services (May 2021 – Apr 2023): live gaming website and back office, legacy refactoring, frequent releases.
 - **Angular Developer**, Finance Evolution SRL (Jun 2019 – Mar 2021): back-office portals for client companies.

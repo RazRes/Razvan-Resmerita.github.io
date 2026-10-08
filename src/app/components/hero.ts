@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { PROFILE } from '../data/cv.data';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { fmt } from '../data/content';
+import { I18n } from '../i18n';
 import { Icon } from './icon';
 
 @Component({
@@ -23,34 +24,37 @@ import { Icon } from './icon';
             <circle class="node" cx="556" cy="482" r="5" />
           </g>
         </svg>
-        @if (profile.photo && !photoFailed()) {
+        @if (profile().photo && !photoFailed()) {
           <img
             class="photo"
-            [src]="profile.photo"
-            [alt]="'Photo of ' + profile.name"
+            [src]="profile().photo"
+            [alt]="photoAlt()"
             width="185"
             height="185"
             (error)="photoFailed.set(true)"
           />
         } @else {
-          <div class="photo initials">{{ profile.initials }}</div>
+          <div class="photo initials">{{ profile().initials }}</div>
         }
       </div>
 
-      <p class="eyebrow-label">{{ profile.title }} · {{ city }}</p>
-      <h1>{{ profile.name }}</h1>
-      <p class="lead">
-        Building with Angular and TypeScript since {{ profile.since }}, now working across Power
-        Platform and Dynamics 365, with AI and LLM tools built into my everyday workflow.
+      <p class="eyebrow-label">{{ profile().title }} · {{ city() }}</p>
+      <h1>{{ profile().name }}</h1>
+      <p class="lead">{{ lead() }}</p>
+      <p class="now">
+        <span class="now-label">{{ ui().nowLabel }}</span> {{ profile().now }}
       </p>
+      @if (profile().openToWork) {
+        <p class="open">{{ ui().openToWork }}</p>
+      }
       <div class="actions">
-        <a class="btn primary" [href]="profile.cv" download>
-          <app-icon name="download" /> Download CV
+        <a class="btn primary" [href]="profile().cv" download>
+          <app-icon name="download" /> {{ ui().downloadCv }}
         </a>
-        <a class="btn" [href]="profile.links.github" target="_blank" rel="noopener">
+        <a class="btn" [href]="profile().links.github" target="_blank" rel="noopener">
           <app-icon name="github" /> GitHub
         </a>
-        <a class="btn" [href]="profile.links.linkedin" target="_blank" rel="noopener">
+        <a class="btn" [href]="profile().links.linkedin" target="_blank" rel="noopener">
           <app-icon name="linkedin" /> LinkedIn
         </a>
       </div>
@@ -134,7 +138,29 @@ import { Icon } from './icon';
       font-size: 1.15rem;
       color: var(--muted);
       max-width: 580px;
-      margin-bottom: 36px;
+      margin-bottom: 20px;
+    }
+    .now {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .open {
+      margin-bottom: 32px;
+      padding: 5px 14px;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .now-label {
+      margin-right: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
     }
     .actions {
       display: flex;
@@ -145,7 +171,11 @@ import { Icon } from './icon';
   `,
 })
 export class Hero {
-  protected readonly profile = PROFILE;
-  protected readonly city = PROFILE.location.split(',')[0];
+  private readonly i18n = inject(I18n);
+  protected readonly ui = computed(() => this.i18n.c().ui);
+  protected readonly profile = computed(() => this.i18n.c().profile);
+  protected readonly city = computed(() => this.profile().location.split(',')[0]);
+  protected readonly lead = computed(() => fmt(this.ui().heroLead, { since: this.profile().since }));
+  protected readonly photoAlt = computed(() => fmt(this.ui().photoOf, { name: this.profile().name }));
   protected readonly photoFailed = signal(false);
 }

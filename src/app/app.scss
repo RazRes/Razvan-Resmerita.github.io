@@ -72,7 +72,38 @@
 
 .tools {
   display: flex;
+  align-items: center;
   gap: 8px;
+}
+
+.lang-switch {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+
+  button {
+    padding: 6px 10px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--text);
+    }
+
+    &.on {
+      background: var(--accent);
+      color: var(--accent-ink);
+    }
+  }
 }
 
 .icon-btn {

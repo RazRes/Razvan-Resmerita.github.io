@@ -163,3 +163,67 @@ ul {
     animation: none !important;
   }
 }
+
+/* Print / save as PDF: a clean one-column résumé on white paper. */
+@media print {
+  :root,
+  :root[data-theme='light'] {
+    --bg: #fff;
+    --surface: #fff;
+    --surface-2: #fff;
+    --text: #000;
+    --muted: #333;
+    --line: #bbb;
+    --accent: #000;
+    --accent-ink: #fff;
+  }
+
+  body {
+    font-size: 11pt;
+    line-height: 1.45;
+  }
+
+  .topbar,
+  .footer,
+  .orbit svg,
+  app-featured-project .showcase,
+  app-more-projects,
+  app-contact-form,
+  .btn.toggle,
+  .actions {
+    display: none !important;
+  }
+
+  .section {
+    padding: 16pt 0;
+    break-inside: avoid-page;
+  }
+
+  .alt {
+    border: 0;
+  }
+
+  .hero {
+    padding: 0 0 12pt !important;
+  }
+
+  .orbit {
+    width: 130px !important;
+    margin-bottom: 8pt !important;
+  }
+
+  app-featured-project .card {
+    display: block !important;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  li,
+  .card,
+  .panel,
+  .group {
+    break-inside: avoid;
+  }
+}

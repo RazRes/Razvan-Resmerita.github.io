@@ -41,15 +41,49 @@ export interface Language {
   dots: number;
 }
 
-export const PROFILE = {
+export interface Education {
+  title: string;
+  place: string;
+  period: string;
+  detail: string;
+}
+
+export interface MoreProject {
+  name: string;
+  description: string;
+  stack: string[];
+  year: string;
+  url: string;
+}
+
+export interface Profile {
+  name: string;
+  initials: string;
+  title: string;
+  headline: string;
+  location: string;
+  since: number;
+  now: string;
+  /** Shows the "open to new opportunities" badge in the hero. */
+  openToWork: boolean;
+  /** Set to null to show initials instead of a photo. */
+  photo: string | null;
+  cv: string;
+  email: string;
+  links: { github: string; linkedin: string };
+  about: string[];
+}
+
+export const PROFILE: Profile = {
   name: 'Razvan Resmerita',
   initials: 'RR',
-  title: 'Frontend Developer',
+  title: 'Full Stack Developer',
   headline: 'Angular · TypeScript · Power Platform · Dynamics 365',
   location: 'Bucharest, Romania',
   since: 2019,
-  /** Set to null to show initials instead of a photo. */
-  photo: 'profile.jpg' as string | null,
+  now: 'Full Stack Developer at LINKSOFT · Angular, Power Apps, Dynamics 365',
+  openToWork: true,
+  photo: 'profile.jpg',
   cv: 'CV-Resmerita-Razvan.pdf',
   email: 'resmeritarazvan93@gmail.com',
   links: {
@@ -88,7 +122,7 @@ export const FEATURED_PROJECT: Project = {
 
 export const EXPERIENCE: Job[] = [
   {
-    role: 'Frontend Developer',
+    role: 'Full Stack Developer',
     company: 'LINKSOFT',
     location: 'Bucharest',
     period: 'Feb 2026 – Present',
@@ -154,7 +188,7 @@ export const SKILLS: SkillGroup[] = [
   },
 ];
 
-export const EDUCATION = [
+export const EDUCATION: Education[] = [
   {
     title: 'Java Course',
     place: '480 hours, Basic + Intermediate',
@@ -173,4 +207,29 @@ export const LANGUAGES: Language[] = [
   { name: 'Italian', level: 'Native', dots: 5 },
   { name: 'Romanian', level: 'Native', dots: 5 },
   { name: 'English', level: 'Professional', dots: 4 },
+];
+
+/** Public GitHub repos, described only from what their code and GitHub metadata show. */
+export const MORE_PROJECTS: MoreProject[] = [
+  {
+    name: 'car-trip',
+    description: 'Keeps track of the members who join a car trip.',
+    stack: ['HTML'],
+    year: '2026',
+    url: 'https://github.com/RazRes/car-trip',
+  },
+  {
+    name: 'ExpensesTracker',
+    description: 'An expenses tracker with a PostgreSQL back end.',
+    stack: ['HTML', 'JavaScript', 'PostgreSQL'],
+    year: '2026',
+    url: 'https://github.com/RazRes/ExpensesTracker',
+  },
+  {
+    name: 'DatingApp',
+    description: 'A full-stack dating app: a C# back end with a TypeScript front end.',
+    stack: ['C#', 'TypeScript'],
+    year: '2025',
+    url: 'https://github.com/RazRes/DatingApp',
+  },
 ];

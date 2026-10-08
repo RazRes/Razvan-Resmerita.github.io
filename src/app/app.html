@@ -1,12 +1,12 @@
 <header class="topbar" [class.scrolled]="scrolled()">
-  <nav class="container nav" aria-label="Main">
+  <nav class="container nav" [attr.aria-label]="ui().mainNav">
     <a class="brand" href="#top" (click)="goTo('top', $event)">
       <span class="logo">RR<span class="dotmark">.</span></span>
-      <span class="sr-only">{{ profile.name }}</span>
+      <span class="sr-only">{{ profile().name }}</span>
     </a>
 
     <ul class="links" [class.open]="menuOpen()">
-      @for (item of nav; track item.id) {
+      @for (item of nav(); track item.id) {
         <li>
           <a [href]="'#' + item.id" [class.active]="activeSection() === item.id" (click)="goTo(item.id, $event)">
             {{ item.label }}
@@ -16,11 +16,24 @@
     </ul>
 
     <div class="tools">
+      <div class="lang-switch" role="group" [attr.aria-label]="ui().language">
+        @for (l of i18n.langs; track l) {
+          <button
+            type="button"
+            [class.on]="i18n.lang() === l"
+            [attr.aria-pressed]="i18n.lang() === l"
+            [attr.lang]="l"
+            (click)="i18n.setLang(l)"
+          >
+            {{ l.toUpperCase() }}
+          </button>
+        }
+      </div>
       <button
         class="icon-btn"
         type="button"
         (click)="toggleTheme()"
-        [attr.aria-label]="theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+        [attr.aria-label]="theme() === 'dark' ? ui().toLight : ui().toDark"
       >
         <app-icon [name]="theme() === 'dark' ? 'sun' : 'moon'" />
       </button>
@@ -29,7 +42,7 @@
         type="button"
         (click)="toggleMenu()"
         [attr.aria-expanded]="menuOpen()"
-        aria-label="Toggle menu"
+        [attr.aria-label]="ui().toggleMenu"
       >
         <app-icon [name]="menuOpen() ? 'close' : 'menu'" />
       </button>
@@ -42,20 +55,19 @@
 
   <section class="section" id="about">
     <div class="container about">
-      <h2 class="section-title">About me</h2>
+      <h2 class="section-title">{{ ui().aboutTitle }}</h2>
       <div class="about-grid">
         <div class="about-text">
-          @for (p of profile.about; track $index) {
+          @for (p of profile().about; track $index) {
             <p>{{ p }}</p>
           }
         </div>
         <aside class="ai-card">
-          <h3>How I work with AI</h3>
+          <h3>{{ ui().aiTitle }}</h3>
           <ul>
-            <li>Prototype features and UI faster with LLM coding assistants</li>
-            <li>Speed up debugging and refactoring of large codebases</li>
-            <li>Learn new stacks quickly, like Power Apps, Dynamics 365 and .NET</li>
-            <li>Always review, test and own the code that ships</li>
+            @for (item of ui().aiItems; track $index) {
+              <li>{{ item }}</li>
+            }
           </ul>
         </aside>
       </div>
@@ -64,27 +76,28 @@
 
   <section class="section alt" id="project">
     <div class="container">
-      <h2 class="section-title">Featured project</h2>
-      <app-featured-project [project]="project" />
+      <h2 class="section-title">{{ ui().projectTitle }}</h2>
+      <app-featured-project [project]="c().project" />
+      <app-more-projects [projects]="c().moreProjects" />
     </div>
   </section>
 
   <section class="section" id="experience">
     <div class="container">
-      <h2 class="section-title">Experience</h2>
-      <app-experience [jobs]="experience" />
+      <h2 class="section-title">{{ ui().experienceTitle }}</h2>
+      <app-experience [jobs]="c().experience" />
     </div>
   </section>
 
   <section class="section alt" id="skills">
     <div class="container">
-      <h2 class="section-title">Skills</h2>
-      <app-skills [groups]="skills" />
+      <h2 class="section-title">{{ ui().skillsTitle }}</h2>
+      <app-skills [groups]="c().skills" />
 
       <div class="extra">
         <div class="panel">
-          <h3>Education &amp; courses</h3>
-          @for (e of education; track e.title) {
+          <h3>{{ ui().educationTitle }}</h3>
+          @for (e of c().education; track e.period) {
             <div class="edu">
               <div class="edu-head">
                 <strong>{{ e.title }}</strong><span>{{ e.period }}</span>
@@ -95,11 +108,11 @@
           }
         </div>
         <div class="panel">
-          <h3>Languages</h3>
-          @for (l of languages; track l.name) {
+          <h3>{{ ui().languagesTitle }}</h3>
+          @for (l of c().languages; track $index) {
             <div class="lang">
               <span>{{ l.name }} <small>{{ l.level }}</small></span>
-              <span class="dots" [attr.aria-label]="l.dots + ' out of 5'">
+              <span class="dots" [attr.aria-label]="outOf(l.dots)">
                 @for (on of dots(l.dots); track $index) {
                   <i [class.on]="on"></i>
                 }
@@ -113,15 +126,13 @@
 
   <section class="section" id="contact">
     <div class="container contact">
-      <h2 class="section-title">Let's talk</h2>
-      <p class="contact-lead">
-        Interested in working together, or want to know more about my experience? Send me a message.
-      </p>
+      <h2 class="section-title">{{ ui().contactTitle }}</h2>
+      <p class="contact-lead">{{ ui().contactLead }}</p>
+      <app-contact-form />
       <div class="contact-actions">
-        <a class="btn primary" [href]="'mailto:' + profile.email"><app-icon name="mail" /> {{ profile.email }}</a>
-        <a class="btn" [href]="profile.links.linkedin" target="_blank" rel="noopener"><app-icon name="linkedin" /> LinkedIn</a>
-        <a class="btn" [href]="profile.links.github" target="_blank" rel="noopener"><app-icon name="github" /> GitHub</a>
-        <a class="btn" [href]="profile.cv" download><app-icon name="download" /> CV (PDF)</a>
+        <a class="btn" [href]="profile().links.linkedin" target="_blank" rel="noopener"><app-icon name="linkedin" /> LinkedIn</a>
+        <a class="btn" [href]="profile().links.github" target="_blank" rel="noopener"><app-icon name="github" /> GitHub</a>
+        <a class="btn" [href]="profile().cv" download><app-icon name="download" /> {{ ui().cvPdf }}</a>
       </div>
     </div>
   </section>
@@ -129,7 +140,7 @@
 
 <footer class="footer">
   <div class="container footer-inner">
-    <span>© {{ year }} {{ profile.name }}</span>
-    <span>Built with Angular 21 &amp; signals · <a [href]="profile.links.github" target="_blank" rel="noopener">source on GitHub</a></span>
+    <span>© {{ year }} {{ profile().name }}</span>
+    <span>{{ ui().footerBuilt }} · <a [href]="profile().links.github" target="_blank" rel="noopener">{{ ui().sourceOnGithub }}</a></span>
   </div>
 </footer>

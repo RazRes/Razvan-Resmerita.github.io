@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Page not found · Razvan Resmerita</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0a0a0c">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500&family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #0a0a0c;
+      color: #ecece8;
+      font-family: 'Manrope', system-ui, sans-serif;
+      text-align: center;
+      -webkit-font-smoothing: antialiased;
+    }
+    .orbit { position: relative; width: min(300px, 80vw); aspect-ratio: 1; margin: 0 auto 28px; display: grid; place-items: center; }
+    .orbit svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .ring { fill: none; stroke: #2a2a2f; stroke-width: 1; }
+    .arc { fill: none; stroke: #c8ff3d; stroke-width: 3; stroke-dasharray: 230 1310; transform: rotate(-35deg); transform-origin: 310px 310px; }
+    .node { fill: #c8ff3d; }
+    .code { position: relative; font-family: 'Unbounded', sans-serif; font-weight: 500; font-size: clamp(2.6rem, 11vw, 4rem); letter-spacing: -0.02em; }
+    h1 { margin: 0 0 12px; font-family: 'Unbounded', sans-serif; font-weight: 500; font-size: clamp(1.3rem, 4vw, 1.8rem); }
+    p { margin: 0 auto 28px; max-width: 420px; color: #a4a4a0; line-height: 1.6; }
+    a { display: inline-block; padding: 13px 24px; border-radius: 999px; background: #c8ff3d; color: #0a0a0c; font-weight: 700; text-decoration: none; border: 1px solid #c8ff3d; }
+    a:hover { background: transparent; color: #c8ff3d; }
+    a:focus-visible { outline: 2px solid #c8ff3d; outline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="orbit">
+      <svg viewBox="0 0 620 620" aria-hidden="true" focusable="false">
+        <circle class="ring" cx="310" cy="310" r="140" />
+        <circle class="ring" cx="310" cy="310" r="190" />
+        <circle class="ring" cx="310" cy="310" r="245" />
+        <circle class="ring" cx="310" cy="310" r="300" />
+        <circle class="arc" cx="310" cy="310" r="245" />
+        <circle class="node" cx="425" cy="172" r="6" />
+      </svg>
+      <span class="code">404</span>
+    </div>
+    <h1>Page not found</h1>
+    <p>This page drifted out of orbit. The link may be wrong, or the page may have moved.</p>
+    <a href="/">Back to the portfolio</a>
+  </main>
+</body>
+</html>

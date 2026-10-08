@@ -3,14 +3,18 @@ import {
   Component,
   DestroyRef,
   afterNextRender,
+  computed,
   effect,
   inject,
   signal,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { EDUCATION, EXPERIENCE, FEATURED_PROJECT, LANGUAGES, PROFILE, SKILLS } from './data/cv.data';
+import { fmt } from './data/content';
+import { I18n } from './i18n';
 import { Hero } from './components/hero';
 import { FeaturedProject } from './components/featured-project';
+import { MoreProjects } from './components/more-projects';
+import { ContactForm } from './components/contact-form';
 import { Experience } from './components/experience';
 import { Skills } from './components/skills';
 import { Icon } from './components/icon';
@@ -20,7 +24,7 @@ const THEME_KEY = 'theme';
 
 @Component({
   selector: 'app-root',
-  imports: [Hero, FeaturedProject, Experience, Skills, Icon],
+  imports: [Hero, FeaturedProject, MoreProjects, ContactForm, Experience, Skills, Icon],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,21 +32,22 @@ const THEME_KEY = 'theme';
 export class App {
   private readonly document = inject(DOCUMENT);
 
-  protected readonly profile = PROFILE;
-  protected readonly project = FEATURED_PROJECT;
-  protected readonly experience = EXPERIENCE;
-  protected readonly skills = SKILLS;
-  protected readonly education = EDUCATION;
-  protected readonly languages = LANGUAGES;
+  protected readonly i18n = inject(I18n);
+  protected readonly c = this.i18n.c;
+  protected readonly ui = computed(() => this.c().ui);
+  protected readonly profile = computed(() => this.c().profile);
   protected readonly year = new Date().getFullYear();
 
-  protected readonly nav = [
-    { id: 'about', label: 'About' },
-    { id: 'project', label: 'Project' },
-    { id: 'experience', label: 'Experience' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'contact', label: 'Contact' },
-  ];
+  protected readonly nav = computed(() => {
+    const labels = this.ui().nav;
+    return [
+      { id: 'about', label: labels.about },
+      { id: 'project', label: labels.project },
+      { id: 'experience', label: labels.experience },
+      { id: 'skills', label: labels.skills },
+      { id: 'contact', label: labels.contact },
+    ];
+  });
 
   protected readonly activeSection = signal('');
   protected readonly menuOpen = signal(false);
@@ -50,6 +55,10 @@ export class App {
   protected readonly theme = signal<Theme>(this.initialTheme());
 
   constructor() {
+    effect(() => {
+      this.document.documentElement.lang = this.i18n.lang();
+    });
+
     effect(() => {
       const theme = this.theme();
       this.document.documentElement.dataset['theme'] = theme;
@@ -70,7 +79,7 @@ export class App {
         },
         { rootMargin: '-45% 0px -50% 0px' },
       );
-      this.nav.forEach(({ id }) => {
+      this.nav().forEach(({ id }) => {
         const el = this.document.getElementById(id);
         if (el) observer.observe(el);
       });
@@ -105,6 +114,10 @@ export class App {
 
   protected dots(n: number): boolean[] {
     return Array.from({ length: 5 }, (_, i) => i < n);
+  }
+
+  protected outOf(n: number): string {
+    return fmt(this.ui().outOf, { n });
   }
 
   private initialTheme(): Theme {

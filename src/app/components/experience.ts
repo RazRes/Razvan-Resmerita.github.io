@@ -67,7 +67,6 @@ import { Job } from '../data/cv.data';
       &.current::before {
         border-color: var(--accent);
         background: var(--accent);
-        box-shadow: 0 0 0 5px var(--accent-soft);
       }
     }
     .when {
@@ -86,7 +85,7 @@ import { Job } from '../data/cv.data';
       letter-spacing: 0.08em;
       padding: 2px 8px;
       border-radius: 999px;
-      background: var(--accent-soft);
+      border: 1px solid var(--accent);
       color: var(--accent);
     }
     h3 {

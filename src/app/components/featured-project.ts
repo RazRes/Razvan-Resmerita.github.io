@@ -9,11 +9,9 @@ import { Icon } from './icon';
   template: `
     <article class="card">
       <div class="body">
-        <div class="top">
-          <span class="badge"><span class="live"></span>{{ project().status }}</span>
-          <span class="role">{{ project().role }}</span>
-        </div>
+        <p class="eyebrow-label">{{ project().status }}</p>
         <h3>{{ project().name }}</h3>
+        <p class="role">{{ project().role }}</p>
         <p class="summary">{{ project().summary }}</p>
         <ul>
           @for (item of project().highlights; track item) {
@@ -29,141 +27,115 @@ import { Icon } from './icon';
           Visit the live app <app-icon name="external" [size]="16" />
         </a>
       </div>
-      <div class="art" aria-hidden="true">
-        <div class="phone">
-          <div class="notch"></div>
-          <img class="screen" [src]="project().image" alt="" />
-        </div>
+      <div class="art">
+        <span class="ring outer" aria-hidden="true"></span>
+        <span class="ring inner" aria-hidden="true"></span>
+        <span class="node" aria-hidden="true"></span>
+        <img
+          class="screen"
+          [src]="project().image"
+          [alt]="project().name + ' on a phone: header, hero and the tab bar'"
+          width="540"
+          height="1080"
+        />
       </div>
     </article>
   `,
   styles: `
     .card {
       display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-    .body {
-      padding: 40px;
-    }
-    .top {
-      display: flex;
-      flex-wrap: wrap;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 56px;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 5px 12px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-    .live {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #2fb36d;
-    }
-    .role {
-      font-size: 0.85rem;
-      color: var(--muted);
     }
     h3 {
-      font-size: 2rem;
-      margin-bottom: 12px;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: clamp(1.9rem, 4.4vw, 3.2rem);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin: 18px 0 8px;
+    }
+    .role {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 20px;
     }
     .summary {
-      color: var(--muted);
-      margin-bottom: 18px;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: 24px;
     }
     ul {
       list-style: none;
-      display: grid;
-      gap: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      color: var(--muted);
     }
     li {
-      position: relative;
-      padding-left: 22px;
+      display: flex;
+      gap: 14px;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+      &:last-child {
+        border-bottom: 1px solid var(--line);
+      }
       &::before {
         content: '';
-        position: absolute;
-        left: 2px;
-        top: 0.65em;
-        width: 8px;
-        height: 8px;
-        border-radius: 2px;
+        flex: 0 0 7px;
+        height: 7px;
+        margin-top: 0.62em;
+        border-radius: 50%;
         background: var(--accent);
-        transform: rotate(45deg);
       }
     }
     .tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 26px;
+      margin-bottom: 28px;
     }
     .art {
+      position: relative;
       display: grid;
       place-items: center;
-      padding: 32px;
-      background:
-        radial-gradient(circle at 30% 20%, rgba(255, 179, 71, 0.35), transparent 55%),
-        linear-gradient(150deg, #14213d, #22345e);
+      width: min(440px, 100%);
+      aspect-ratio: 1;
+      justify-self: center;
     }
-    .phone {
-      width: 190px;
-      height: 376px;
-      border-radius: 32px;
-      background: #0b1120;
-      padding: 26px 10px 10px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
-      position: relative;
-      transform: rotate(-4deg);
-    }
-    .notch {
+    .ring {
       position: absolute;
-      top: 9px;
-      left: 50%;
-      width: 56px;
-      height: 10px;
-      border-radius: 10px;
-      background: #1c2640;
-      transform: translateX(-50%);
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      &.outer {
+        inset: 0;
+      }
+      &.inner {
+        inset: 11%;
+      }
+    }
+    .node {
+      position: absolute;
+      top: 13%;
+      right: 13%;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
     }
     .screen {
-      display: block;
-      width: 100%;
-      height: 100%;
+      position: relative;
+      width: 44%;
+      height: auto;
       border-radius: 24px;
-      object-fit: cover;
-      object-position: top;
-      background: #060a0c;
+      border: 1px solid var(--line);
     }
     @media (max-width: 820px) {
       .card {
         grid-template-columns: 1fr;
-      }
-      .body {
-        padding: 28px 22px;
+        gap: 40px;
       }
       .art {
         order: -1;
-        padding: 28px;
-      }
-      .phone {
-        width: 150px;
-        height: 296px;
       }
     }
   `,

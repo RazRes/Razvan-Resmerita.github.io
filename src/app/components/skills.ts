@@ -25,7 +25,6 @@ import { SkillGroup } from '../data/cv.data';
       gap: 20px;
     }
     .group {
-      background: var(--surface);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       padding: 24px;

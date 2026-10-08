@@ -8,185 +8,144 @@ import { Icon } from './icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section class="hero container" id="top">
-      <div class="intro">
-        <p class="eyebrow">
-          <span class="dot"></span> {{ profile.title }} · Angular since {{ profile.since }}
-        </p>
-        <h1>
-          Hi, I'm {{ firstName }}.<br />
-          <span class="accent">I build web apps with Angular.</span>
-        </h1>
-        <p class="lead">
-          {{ profile.title }} since {{ profile.since }}, now expanding into Power Platform and
-          Dynamics 365, with AI and LLM tools built into my everyday workflow.
-        </p>
-        <p class="meta"><app-icon name="pin" [size]="16" /> {{ profile.location }}</p>
-        <div class="actions">
-          <a class="btn primary" [href]="profile.cv" download>
-            <app-icon name="download" /> Download CV
-          </a>
-          <a class="btn" [href]="profile.links.github" target="_blank" rel="noopener">
-            <app-icon name="github" /> GitHub
-          </a>
-          <a class="btn" [href]="profile.links.linkedin" target="_blank" rel="noopener">
-            <app-icon name="linkedin" /> LinkedIn
-          </a>
-        </div>
-      </div>
-
-      <div class="visual">
+      <div class="orbit">
+        <svg viewBox="0 0 620 620" aria-hidden="true" focusable="false">
+          <circle class="ring" cx="310" cy="310" r="140" />
+          <circle class="ring" cx="310" cy="310" r="190" />
+          <circle class="ring" cx="310" cy="310" r="245" />
+          <circle class="ring" cx="310" cy="310" r="300" />
+          <g class="spin">
+            <circle class="arc" cx="310" cy="310" r="245" />
+            <circle class="node accent" cx="425" cy="172" r="6" />
+          </g>
+          <g class="spin reverse">
+            <circle class="node" cx="84" cy="228" r="4" />
+            <circle class="node" cx="556" cy="482" r="5" />
+          </g>
+        </svg>
         @if (profile.photo && !photoFailed()) {
           <img
             class="photo"
             [src]="profile.photo"
             [alt]="'Photo of ' + profile.name"
-            width="280"
-            height="280"
+            width="213"
+            height="213"
             (error)="photoFailed.set(true)"
           />
         } @else {
           <div class="photo initials">{{ profile.initials }}</div>
         }
-        <div class="stat stat-years">
-          <strong>{{ years }}+</strong>
-          <span>years with Angular</span>
-        </div>
-        <div class="stat stat-app">
-          <strong>1</strong>
-          <span>app live on the App Store</span>
-        </div>
+      </div>
+
+      <p class="eyebrow-label">{{ profile.title }} · {{ city }}</p>
+      <h1>{{ profile.name }}</h1>
+      <p class="lead">
+        Building with Angular and TypeScript since {{ profile.since }}, now working across Power
+        Platform and Dynamics 365, with AI and LLM tools built into my everyday workflow.
+      </p>
+      <div class="actions">
+        <a class="btn primary" [href]="profile.cv" download>
+          <app-icon name="download" /> Download CV
+        </a>
+        <a class="btn" [href]="profile.links.github" target="_blank" rel="noopener">
+          <app-icon name="github" /> GitHub
+        </a>
+        <a class="btn" [href]="profile.links.linkedin" target="_blank" rel="noopener">
+          <app-icon name="linkedin" /> LinkedIn
+        </a>
       </div>
     </section>
   `,
   styles: `
     .hero {
-      display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: 48px;
-      align-items: center;
-      padding: 140px 0 80px;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--muted);
-      background: var(--surface);
-      border: 1px solid var(--line);
-      padding: 6px 14px;
-      border-radius: 999px;
-      margin-bottom: 22px;
-    }
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #2fb36d;
-      box-shadow: 0 0 0 4px rgba(47, 179, 109, 0.18);
-    }
-    h1 {
-      font-size: clamp(2.3rem, 5.4vw, 3.7rem);
-      letter-spacing: -0.02em;
-      margin-bottom: 20px;
-    }
-    .accent {
-      color: var(--accent);
-    }
-    .lead {
-      font-size: 1.12rem;
-      color: var(--muted);
-      max-width: 560px;
-      margin-bottom: 14px;
-    }
-    .meta {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 6px;
-      color: var(--muted);
-      font-size: 0.92rem;
-      margin-bottom: 28px;
+      text-align: center;
+      padding: 100px 0 96px;
     }
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .visual {
+    .orbit {
       position: relative;
-      justify-self: center;
-      width: min(320px, 100%);
+      display: grid;
+      place-items: center;
+      width: min(560px, 100%);
       aspect-ratio: 1;
+      margin-bottom: 16px;
+      svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .ring {
+      fill: none;
+      stroke: var(--line);
+      stroke-width: 1;
+    }
+    .arc {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 3;
+      stroke-dasharray: 230 1310;
+      transform: rotate(-35deg);
+      transform-origin: 310px 310px;
+    }
+    .node {
+      fill: var(--text);
+      &.accent {
+        fill: var(--accent);
+      }
+    }
+    .spin {
+      transform-origin: 310px 310px;
+      animation: spin 80s linear infinite;
+    }
+    .reverse {
+      animation-direction: reverse;
+      animation-duration: 120s;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
     .photo {
-      width: 100%;
-      height: 100%;
+      position: relative;
+      width: 38%;
+      height: auto;
+      aspect-ratio: 1;
+      border-radius: 50%;
       object-fit: cover;
-      border-radius: 32% 68% 55% 45% / 45% 40% 60% 55%;
-      border: 6px solid var(--surface);
-      box-shadow: var(--shadow);
-      background: var(--navy);
+      background: var(--surface-2);
     }
     .initials {
       display: grid;
       place-items: center;
       font-family: var(--font-display);
-      font-size: 5rem;
-      font-weight: 700;
-      color: #ffb347;
+      font-size: 3rem;
+      color: var(--accent);
     }
-    .stat {
-      position: absolute;
+    h1 {
+      font-size: clamp(2.1rem, 6.2vw, 4.75rem);
+      margin: 20px 0 24px;
+    }
+    .lead {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 580px;
+      margin-bottom: 36px;
+    }
+    .actions {
       display: flex;
-      flex-direction: column;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      border-radius: 14px;
-      padding: 10px 14px;
-      line-height: 1.2;
-      strong {
-        font-family: var(--font-display);
-        font-size: 1.5rem;
-        color: var(--accent);
-      }
-      span {
-        font-size: 0.78rem;
-        color: var(--muted);
-        max-width: 110px;
-      }
-    }
-    .stat-years {
-      left: -24px;
-      bottom: 28px;
-    }
-    .stat-app {
-      right: -18px;
-      top: 18px;
-    }
-    @media (max-width: 820px) {
-      .hero {
-        grid-template-columns: 1fr;
-        padding: 112px 0 56px;
-        gap: 40px;
-      }
-      .visual {
-        width: min(240px, 70%);
-        order: -1;
-      }
-      .stat-years {
-        left: -36px;
-      }
-      .stat-app {
-        right: -36px;
-      }
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
     }
   `,
 })
 export class Hero {
   protected readonly profile = PROFILE;
-  protected readonly firstName = PROFILE.name.split(' ')[0];
-  protected readonly years = new Date().getFullYear() - PROFILE.since - 1;
+  protected readonly city = PROFILE.location.split(',')[0];
   protected readonly photoFailed = signal(false);
 }

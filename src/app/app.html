@@ -1,8 +1,8 @@
 <header class="topbar" [class.scrolled]="scrolled()">
   <nav class="container nav" aria-label="Main">
     <a class="brand" href="#top" (click)="menuOpen.set(false)">
-      <span class="logo">RR</span>
-      <span class="brand-name">{{ profile.name }}</span>
+      <span class="logo">RR<span class="dotmark">.</span></span>
+      <span class="sr-only">{{ profile.name }}</span>
     </a>
 
     <ul class="links" [class.open]="menuOpen()">
@@ -42,7 +42,7 @@
 
   <section class="section" id="about">
     <div class="container about">
-      <h2 class="section-title"><span class="num">01</span> About me</h2>
+      <h2 class="section-title">About me</h2>
       <div class="about-grid">
         <div class="about-text">
           @for (p of profile.about; track $index) {
@@ -64,21 +64,21 @@
 
   <section class="section alt" id="project">
     <div class="container">
-      <h2 class="section-title"><span class="num">02</span> Featured project</h2>
+      <h2 class="section-title">Featured project</h2>
       <app-featured-project [project]="project" />
     </div>
   </section>
 
   <section class="section" id="experience">
     <div class="container">
-      <h2 class="section-title"><span class="num">03</span> Experience</h2>
+      <h2 class="section-title">Experience</h2>
       <app-experience [jobs]="experience" />
     </div>
   </section>
 
   <section class="section alt" id="skills">
     <div class="container">
-      <h2 class="section-title"><span class="num">04</span> Skills</h2>
+      <h2 class="section-title">Skills</h2>
       <app-skills [groups]="skills" />
 
       <div class="extra">
@@ -113,7 +113,7 @@
 
   <section class="section" id="contact">
     <div class="container contact">
-      <h2 class="section-title"><span class="num">05</span> Let's talk</h2>
+      <h2 class="section-title">Let's talk</h2>
       <p class="contact-lead">
         Interested in working together, or want to know more about my experience? Send me a message.
       </p>

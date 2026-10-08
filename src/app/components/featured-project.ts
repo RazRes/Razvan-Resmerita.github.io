@@ -1,0 +1,217 @@
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Project } from '../data/cv.data';
+import { Icon } from './icon';
+
+@Component({
+  selector: 'app-featured-project',
+  imports: [Icon],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <article class="card">
+      <div class="body">
+        <div class="top">
+          <span class="badge"><span class="live"></span>{{ project().status }}</span>
+          <span class="role">{{ project().role }}</span>
+        </div>
+        <h3>{{ project().name }}</h3>
+        <p class="summary">{{ project().summary }}</p>
+        <ul>
+          @for (item of project().highlights; track item) {
+            <li>{{ item }}</li>
+          }
+        </ul>
+        <div class="tags">
+          @for (tag of project().tags; track tag) {
+            <span class="chip">{{ tag }}</span>
+          }
+        </div>
+        <a class="btn primary" [href]="project().url" target="_blank" rel="noopener">
+          Visit the live app <app-icon name="external" [size]="16" />
+        </a>
+      </div>
+      <div class="art" aria-hidden="true">
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="screen">
+            <div class="bar"></div>
+            @for (n of [1, 2, 3]; track n) {
+              <div class="post">
+                <div class="img"></div>
+                <div class="line w70"></div>
+                <div class="line w40"></div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </article>
+  `,
+  styles: `
+    .card {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .body {
+      padding: 40px;
+    }
+    .top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .live {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #2fb36d;
+    }
+    .role {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    h3 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    .summary {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    ul {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    li {
+      position: relative;
+      padding-left: 22px;
+      &::before {
+        content: '';
+        position: absolute;
+        left: 2px;
+        top: 0.65em;
+        width: 8px;
+        height: 8px;
+        border-radius: 2px;
+        background: var(--accent);
+        transform: rotate(45deg);
+      }
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 26px;
+    }
+    .art {
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255, 179, 71, 0.35), transparent 55%),
+        linear-gradient(150deg, #14213d, #22345e);
+    }
+    .phone {
+      width: 190px;
+      height: 360px;
+      border-radius: 32px;
+      background: #0b1120;
+      padding: 10px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      position: relative;
+      transform: rotate(-4deg);
+    }
+    .notch {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      width: 60px;
+      height: 14px;
+      border-radius: 10px;
+      background: #0b1120;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+    .screen {
+      height: 100%;
+      border-radius: 24px;
+      background: #f6f5f1;
+      padding: 34px 12px 12px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      overflow: hidden;
+    }
+    .bar {
+      height: 10px;
+      width: 55%;
+      border-radius: 6px;
+      background: #14213d;
+    }
+    .post {
+      background: #fff;
+      border-radius: 12px;
+      padding: 8px;
+      display: grid;
+      gap: 6px;
+      box-shadow: 0 2px 6px rgba(20, 33, 61, 0.08);
+    }
+    .img {
+      height: 52px;
+      border-radius: 8px;
+      background: linear-gradient(120deg, #ffb347, #c96a12);
+    }
+    .post:nth-child(3) .img {
+      background: linear-gradient(120deg, #22345e, #4a6aa8);
+    }
+    .line {
+      height: 6px;
+      border-radius: 4px;
+      background: #d9dce3;
+    }
+    .w70 {
+      width: 70%;
+    }
+    .w40 {
+      width: 40%;
+    }
+    @media (max-width: 820px) {
+      .card {
+        grid-template-columns: 1fr;
+      }
+      .body {
+        padding: 28px 22px;
+      }
+      .art {
+        order: -1;
+        padding: 28px;
+      }
+      .phone {
+        width: 150px;
+        height: 280px;
+      }
+    }
+  `,
+})
+export class FeaturedProject {
+  readonly project = input.required<Project>();
+}

@@ -1,0 +1,135 @@
+<header class="topbar" [class.scrolled]="scrolled()">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="#top" (click)="menuOpen.set(false)">
+      <span class="logo">RR</span>
+      <span class="brand-name">{{ profile.name }}</span>
+    </a>
+
+    <ul class="links" [class.open]="menuOpen()">
+      @for (item of nav; track item.id) {
+        <li>
+          <a [href]="'#' + item.id" [class.active]="activeSection() === item.id" (click)="menuOpen.set(false)">
+            {{ item.label }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <div class="tools">
+      <button
+        class="icon-btn"
+        type="button"
+        (click)="toggleTheme()"
+        [attr.aria-label]="theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+      >
+        <app-icon [name]="theme() === 'dark' ? 'sun' : 'moon'" />
+      </button>
+      <button
+        class="icon-btn menu-btn"
+        type="button"
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="menuOpen()"
+        aria-label="Toggle menu"
+      >
+        <app-icon [name]="menuOpen() ? 'close' : 'menu'" />
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <app-hero />
+
+  <section class="section" id="about">
+    <div class="container about">
+      <h2 class="section-title"><span class="num">01</span> About me</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          @for (p of profile.about; track $index) {
+            <p>{{ p }}</p>
+          }
+        </div>
+        <aside class="ai-card">
+          <h3>How I work with AI</h3>
+          <ul>
+            <li>Prototype features and UI faster with LLM coding assistants</li>
+            <li>Speed up debugging and refactoring of large codebases</li>
+            <li>Learn new stacks quickly, like Power Apps, Dynamics 365 and .NET</li>
+            <li>Always review, test and own the code that ships</li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="project">
+    <div class="container">
+      <h2 class="section-title"><span class="num">02</span> Featured project</h2>
+      <app-featured-project [project]="project" />
+    </div>
+  </section>
+
+  <section class="section" id="experience">
+    <div class="container">
+      <h2 class="section-title"><span class="num">03</span> Experience</h2>
+      <app-experience [jobs]="experience" />
+    </div>
+  </section>
+
+  <section class="section alt" id="skills">
+    <div class="container">
+      <h2 class="section-title"><span class="num">04</span> Skills</h2>
+      <app-skills [groups]="skills" />
+
+      <div class="extra">
+        <div class="panel">
+          <h3>Education &amp; courses</h3>
+          @for (e of education; track e.title) {
+            <div class="edu">
+              <div class="edu-head">
+                <strong>{{ e.title }}</strong><span>{{ e.period }}</span>
+              </div>
+              <p class="muted">{{ e.place }}</p>
+              <p class="small">{{ e.detail }}</p>
+            </div>
+          }
+        </div>
+        <div class="panel">
+          <h3>Languages</h3>
+          @for (l of languages; track l.name) {
+            <div class="lang">
+              <span>{{ l.name }} <small>{{ l.level }}</small></span>
+              <span class="dots" [attr.aria-label]="l.dots + ' out of 5'">
+                @for (on of dots(l.dots); track $index) {
+                  <i [class.on]="on"></i>
+                }
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="container contact">
+      <h2 class="section-title"><span class="num">05</span> Let's talk</h2>
+      <p class="contact-lead">
+        Interested in working together, or want to know more about my experience? Send me a message.
+      </p>
+      <div class="contact-actions">
+        <a class="btn primary" [href]="'mailto:' + profile.email"><app-icon name="mail" /> {{ profile.email }}</a>
+        <a class="btn" [href]="profile.links.linkedin" target="_blank" rel="noopener"><app-icon name="linkedin" /> LinkedIn</a>
+        <a class="btn" [href]="profile.links.github" target="_blank" rel="noopener"><app-icon name="github" /> GitHub</a>
+        <a class="btn" [href]="profile.cv" download><app-icon name="download" /> CV (PDF)</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>© {{ year }} {{ profile.name }}</span>
+    <span>Built with Angular 21 &amp; signals · <a [href]="profile.links.github" target="_blank" rel="noopener">source on GitHub</a></span>
+  </div>
+</footer>

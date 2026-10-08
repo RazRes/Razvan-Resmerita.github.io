@@ -13,12 +13,18 @@ export interface Job {
   stack: string[];
 }
 
+export interface Screenshot {
+  src: string;
+  alt: string;
+}
+
 export interface Project {
   name: string;
   role: string;
   status: string;
   url: string;
-  image: string;
+  appStoreUrl: string;
+  screens: Screenshot[];
   summary: string;
   highlights: string[];
   tags: string[];
@@ -62,7 +68,14 @@ export const FEATURED_PROJECT: Project = {
   role: 'Creator & Developer',
   status: 'Live on App Store & Web',
   url: 'https://community-builds-nu.vercel.app',
-  image: 'communitybuilds.jpg',
+  appStoreUrl: 'https://apps.apple.com/ro/app/communitybuilds-app/id6810118751',
+  screens: [
+    { src: 'screens/home.jpg', alt: 'Home screen with the CommunityBuilds logo, tagline and the Explore builds button' },
+    { src: 'screens/explore.jpg', alt: 'Explore screen listing community builds as photo cards' },
+    { src: 'screens/build.jpg', alt: 'Build page with a photo gallery, title and price' },
+    { src: 'screens/rankings.jpg', alt: 'Rankings screen with the most-loved builds' },
+    { src: 'screens/marketplace.jpg', alt: 'Marketplace screen with filters for make, model, price, mileage and year' },
+  ],
   summary:
     'A platform where car enthusiasts showcase their modified and customized builds, document every mod and discover other builders.',
   highlights: [
@@ -124,16 +137,6 @@ export const EXPERIENCE: Job[] = [
     ],
     stack: ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'GitLab'],
   },
-  {
-    role: 'Logistics & Transportation',
-    company: 'CAMST · Autonoleggio Mortara',
-    location: 'Chieri & Santena, Italy',
-    period: 'Sep 2015 – Jun 2018',
-    highlights: [
-      'Warehouse operations, stock management and supplier coordination, then professional driving services, before switching careers into software development.',
-    ],
-    stack: [],
-  },
 ];
 
 export const SKILLS: SkillGroup[] = [
@@ -147,7 +150,7 @@ export const SKILLS: SkillGroup[] = [
   },
   {
     title: 'Tools & ways of working',
-    items: ['AI-assisted development (LLMs)', 'Git', 'GitLab', 'Azure', 'Jira', 'Jasmine & Karma', 'Agile/Scrum', 'Code reviews'],
+    items: ['AI-assisted development (LLMs)', 'ChatGPT', 'Claude', 'Git', 'GitLab', 'Azure', 'Jira', 'Jasmine & Karma', 'Agile/Scrum', 'Code reviews'],
   },
 ];
 

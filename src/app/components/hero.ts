@@ -28,8 +28,8 @@ import { Icon } from './icon';
             class="photo"
             [src]="profile.photo"
             [alt]="'Photo of ' + profile.name"
-            width="213"
-            height="213"
+            width="185"
+            height="185"
             (error)="photoFailed.set(true)"
           />
         } @else {
@@ -68,7 +68,7 @@ import { Icon } from './icon';
       position: relative;
       display: grid;
       place-items: center;
-      width: min(560px, 100%);
+      width: min(440px, 100%);
       aspect-ratio: 1;
       margin-bottom: 16px;
       svg {
@@ -112,7 +112,7 @@ import { Icon } from './icon';
     }
     .photo {
       position: relative;
-      width: 38%;
+      width: 42%;
       height: auto;
       aspect-ratio: 1;
       border-radius: 50%;

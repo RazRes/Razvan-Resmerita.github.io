@@ -90,6 +90,15 @@ export class App {
     this.theme.update((t) => (t === 'dark' ? 'light' : 'dark'));
   }
 
+  /** Smooth-scroll to a section without writing `#id` into the address bar. */
+  protected goTo(id: string, event: Event): void {
+    event.preventDefault();
+    this.menuOpen.set(false);
+    const el = this.document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ block: 'start' });
+  }
+
   protected toggleMenu(): void {
     this.menuOpen.update((v) => !v);
   }

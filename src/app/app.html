@@ -1,6 +1,6 @@
 <header class="topbar" [class.scrolled]="scrolled()">
   <nav class="container nav" aria-label="Main">
-    <a class="brand" href="#top" (click)="menuOpen.set(false)">
+    <a class="brand" href="#top" (click)="goTo('top', $event)">
       <span class="logo">RR<span class="dotmark">.</span></span>
       <span class="sr-only">{{ profile.name }}</span>
     </a>
@@ -8,7 +8,7 @@
     <ul class="links" [class.open]="menuOpen()">
       @for (item of nav; track item.id) {
         <li>
-          <a [href]="'#' + item.id" [class.active]="activeSection() === item.id" (click)="menuOpen.set(false)">
+          <a [href]="'#' + item.id" [class.active]="activeSection() === item.id" (click)="goTo(item.id, $event)">
             {{ item.label }}
           </a>
         </li>

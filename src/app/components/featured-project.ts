@@ -32,16 +32,7 @@ import { Icon } from './icon';
       <div class="art" aria-hidden="true">
         <div class="phone">
           <div class="notch"></div>
-          <div class="screen">
-            <div class="bar"></div>
-            @for (n of [1, 2, 3]; track n) {
-              <div class="post">
-                <div class="img"></div>
-                <div class="line w70"></div>
-                <div class="line w40"></div>
-              </div>
-            }
-          </div>
+          <img class="screen" [src]="project().image" alt="" />
         </div>
       </div>
     </article>
@@ -132,67 +123,32 @@ import { Icon } from './icon';
     }
     .phone {
       width: 190px;
-      height: 360px;
+      height: 376px;
       border-radius: 32px;
       background: #0b1120;
-      padding: 10px;
+      padding: 26px 10px 10px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
       position: relative;
       transform: rotate(-4deg);
     }
     .notch {
       position: absolute;
-      top: 14px;
+      top: 9px;
       left: 50%;
-      width: 60px;
-      height: 14px;
+      width: 56px;
+      height: 10px;
       border-radius: 10px;
-      background: #0b1120;
+      background: #1c2640;
       transform: translateX(-50%);
-      z-index: 1;
     }
     .screen {
+      display: block;
+      width: 100%;
       height: 100%;
       border-radius: 24px;
-      background: #f6f5f1;
-      padding: 34px 12px 12px;
-      display: grid;
-      gap: 10px;
-      align-content: start;
-      overflow: hidden;
-    }
-    .bar {
-      height: 10px;
-      width: 55%;
-      border-radius: 6px;
-      background: #14213d;
-    }
-    .post {
-      background: #fff;
-      border-radius: 12px;
-      padding: 8px;
-      display: grid;
-      gap: 6px;
-      box-shadow: 0 2px 6px rgba(20, 33, 61, 0.08);
-    }
-    .img {
-      height: 52px;
-      border-radius: 8px;
-      background: linear-gradient(120deg, #ffb347, #c96a12);
-    }
-    .post:nth-child(3) .img {
-      background: linear-gradient(120deg, #22345e, #4a6aa8);
-    }
-    .line {
-      height: 6px;
-      border-radius: 4px;
-      background: #d9dce3;
-    }
-    .w70 {
-      width: 70%;
-    }
-    .w40 {
-      width: 40%;
+      object-fit: cover;
+      object-position: top;
+      background: #060a0c;
     }
     @media (max-width: 820px) {
       .card {
@@ -207,7 +163,7 @@ import { Icon } from './icon';
       }
       .phone {
         width: 150px;
-        height: 280px;
+        height: 296px;
       }
     }
   `,

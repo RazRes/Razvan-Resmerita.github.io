@@ -18,6 +18,7 @@ export interface Project {
   role: string;
   status: string;
   url: string;
+  image: string;
   summary: string;
   highlights: string[];
   tags: string[];
@@ -61,6 +62,7 @@ export const FEATURED_PROJECT: Project = {
   role: 'Creator & Developer',
   status: 'Live on App Store & Web',
   url: 'https://community-builds-nu.vercel.app',
+  image: 'communitybuilds.jpg',
   summary:
     'A platform where car enthusiasts showcase their modified and customized builds, document every mod and discover other builders.',
   highlights: [

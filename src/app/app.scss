@@ -126,6 +126,11 @@
   display: none;
 }
 
+.featured {
+  display: grid;
+  gap: 96px;
+}
+
 .alt {
   border-top: 1px solid var(--line);
 }

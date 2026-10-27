@@ -23,7 +23,8 @@ export interface Project {
   role: string;
   status: string;
   url: string;
-  appStoreUrl: string;
+  /** Only for projects published on the App Store. */
+  appStoreUrl?: string;
   screens: Screenshot[];
   summary: string;
   highlights: string[];
@@ -93,32 +94,55 @@ export const PROFILE: Profile = {
   about: [
     'I’ve been building professional web applications with Angular and TypeScript since 2019. I came into software from logistics and transportation, and I still bring the same habits to my code: reliability, ownership and getting things delivered on time.',
     'Today I build features and fix bugs on Angular projects while expanding into the Microsoft ecosystem: Power Apps, Dynamics 365, C# and .NET. I work with modern AI and LLM tools every day, using them to prototype faster, ship sooner, debug smarter and keep code quality high.',
-    'Outside my day job I design and ship my own products end to end. The latest is CommunityBuilds, a community app for car enthusiasts, now live on the App Store and the web.',
+    'Outside my day job I design and ship my own products end to end: CommunityBuilds, a community app for car enthusiasts live on the App Store and the web, and Comitiva, a web app that puts a road trip or a team event on one shareable page.',
   ],
 };
 
-export const FEATURED_PROJECT: Project = {
-  name: 'CommunityBuilds',
-  role: 'Creator & Developer',
-  status: 'Live on App Store & Web',
-  url: 'https://community-builds-nu.vercel.app',
-  appStoreUrl: 'https://apps.apple.com/ro/app/communitybuilds-app/id6810118751',
-  screens: [
-    { src: 'screens/home.jpg', alt: 'Home screen with the CommunityBuilds logo, tagline and the Explore builds button' },
-    { src: 'screens/explore.jpg', alt: 'Explore screen listing community builds as photo cards' },
-    { src: 'screens/build.jpg', alt: 'Build page with a photo gallery, title and price' },
-    { src: 'screens/rankings.jpg', alt: 'Rankings screen with the most-loved builds' },
-    { src: 'screens/marketplace.jpg', alt: 'Marketplace screen with filters for make, model, price, mileage and year' },
-  ],
-  summary:
-    'A platform where car enthusiasts showcase their modified and customized builds, document every mod and discover other builders.',
-  highlights: [
-    'Designed, built and launched the full product end to end.',
-    'Feed, explore, marketplace, rankings, search, user accounts and community voting on builds.',
-    'Published as a native app on the Apple App Store and as a responsive web app.',
-  ],
-  tags: ['Side project', 'Mobile & Web', 'Community'],
-};
+export const PROJECTS: Project[] = [
+  {
+    name: 'CommunityBuilds',
+    role: 'Creator & Developer',
+    status: 'Live on App Store & Web',
+    url: 'https://community-builds-nu.vercel.app',
+    appStoreUrl: 'https://apps.apple.com/ro/app/communitybuilds-app/id6810118751',
+    screens: [
+      { src: 'screens/home.jpg', alt: 'Home screen with the CommunityBuilds logo, tagline and the Explore builds button' },
+      { src: 'screens/explore.jpg', alt: 'Explore screen listing community builds as photo cards' },
+      { src: 'screens/build.jpg', alt: 'Build page with a photo gallery, title and price' },
+      { src: 'screens/rankings.jpg', alt: 'Rankings screen with the most-loved builds' },
+      { src: 'screens/marketplace.jpg', alt: 'Marketplace screen with filters for make, model, price, mileage and year' },
+    ],
+    summary:
+      'A platform where car enthusiasts showcase their modified and customized builds, document every mod and discover other builders.',
+    highlights: [
+      'Designed, built and launched the full product end to end.',
+      'Feed, explore, marketplace, rankings, search, user accounts and community voting on builds.',
+      'Published as a native app on the Apple App Store and as a responsive web app.',
+    ],
+    tags: ['Side project', 'Mobile & Web', 'Community'],
+  },
+  {
+    name: 'Comitiva',
+    role: 'Creator & Developer',
+    status: 'Live on the web',
+    url: 'https://comitiva.online',
+    screens: [
+      { src: 'screens/comitiva-home.jpg', alt: 'Comitiva home screen with the headline "One link. Everyone on the same road." and the Create a trip or event button' },
+      { src: 'screens/comitiva-event.jpg', alt: 'Example trip card, Autumn Run 2026, with the departure countdown, meeting point and the people who joined' },
+      { src: 'screens/comitiva-trip.jpg', alt: 'Road trips card: a route with stops, live map, weather and one-tap help, for cars and bikes' },
+      { src: 'screens/comitiva-rooms.jpg', alt: 'A "needs help" alert with the check-in list, and the hotel rooms people can join' },
+      { src: 'screens/comitiva-how.jpg', alt: 'The three steps: create the trip or event, share one link, be there together' },
+    ],
+    summary:
+      'One shareable link for a road trip or a team event: the route or the agenda, the plan and who is where, with no password and no app to download.',
+    highlights: [
+      'Designed, built and launched the full product end to end.',
+      'Trips with a route, check-ins at each stop, an opt-in live map, weather and one-tap help; events with an agenda, groups and hotel rooms.',
+      'People join with a link or a QR code and the organizer approves each one. Available in English and Romanian.',
+    ],
+    tags: ['Side project', 'Web app', 'Trips & events'],
+  },
+];
 
 export const EXPERIENCE: Job[] = [
   {

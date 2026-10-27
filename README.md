@@ -14,7 +14,7 @@ This repository is my personal portfolio and online CV, built with **Angular 21*
 | **Experience** | Angular developer since 2019 (Turin → Bucharest) |
 | **Core stack** | Angular · TypeScript · RxJS · NgRx · SCSS |
 | **Growing into** | Power Apps (Canvas Apps) · Dynamics 365 · C# · .NET · Go |
-| **Featured project** | [CommunityBuilds](https://community-builds-nu.vercel.app), a car-builds community app, live on the App Store & web |
+| **Featured projects** | [CommunityBuilds](https://community-builds-nu.vercel.app), a car-builds community app, live on the App Store & web · [Comitiva](https://comitiva.online), one shareable page for a road trip or team event |
 | **Languages** | Italian (native) · Romanian (native) · English (professional) |
 
 ## Experience

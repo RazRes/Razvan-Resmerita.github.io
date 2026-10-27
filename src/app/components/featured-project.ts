@@ -23,7 +23,7 @@ const RING_STEP = 0.85;
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '(window:resize)': 'update()' },
   template: `
-    <article class="card">
+    <article class="card" [class.flip]="flip()">
       <div class="body">
         <p class="eyebrow-label">{{ project().status }}</p>
         <h3>{{ project().name }}</h3>
@@ -43,9 +43,11 @@ const RING_STEP = 0.85;
           <a class="btn primary" [href]="project().url" target="_blank" rel="noopener">
             {{ ui().visitWebsite }} <app-icon name="external" [size]="16" />
           </a>
-          <a class="btn" [href]="project().appStoreUrl" target="_blank" rel="noopener">
-            <app-icon name="apple" /> {{ ui().appStore }}
-          </a>
+          @if (project().appStoreUrl; as appStoreUrl) {
+            <a class="btn" [href]="appStoreUrl" target="_blank" rel="noopener">
+              <app-icon name="apple" /> {{ ui().appStore }}
+            </a>
+          }
         </div>
       </div>
       <div
@@ -313,6 +315,14 @@ const RING_STEP = 0.85;
         opacity: calc(1 - var(--a, 0) * 0.5);
       }
     }
+    @media (min-width: 821px) {
+      .card.flip {
+        grid-template-columns: 1fr 1.15fr;
+        .showcase {
+          order: -1;
+        }
+      }
+    }
     @media (max-width: 820px) {
       .card {
         grid-template-columns: 1fr;
@@ -326,6 +336,8 @@ const RING_STEP = 0.85;
 })
 export class FeaturedProject {
   readonly project = input.required<Project>();
+  /** Puts the carousel on the left on wide screens, so stacked projects alternate. */
+  readonly flip = input(false);
   private readonly i18n = inject(I18n);
   protected readonly ui = computed(() => this.i18n.c().ui);
   protected readonly carouselLabel = computed(() =>

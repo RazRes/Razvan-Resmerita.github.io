@@ -1,7 +1,6 @@
 import {
   EDUCATION,
   EXPERIENCE,
-  FEATURED_PROJECT,
   Education,
   Job,
   Language,
@@ -9,6 +8,7 @@ import {
   MORE_PROJECTS,
   MoreProject,
   PROFILE,
+  PROJECTS,
   Profile,
   Project,
   SKILLS,
@@ -69,7 +69,7 @@ export interface Ui {
 export interface Content {
   ui: Ui;
   profile: Profile;
-  project: Project;
+  projects: Project[];
   moreProjects: MoreProject[];
   experience: Job[];
   skills: SkillGroup[];
@@ -83,7 +83,7 @@ export function fmt(template: string, vars: Record<string, string | number>): st
 
 const EN_UI: Ui = {
   mainNav: 'Main',
-  nav: { about: 'About', project: 'Project', experience: 'Experience', skills: 'Skills', contact: 'Contact' },
+  nav: { about: 'About', project: 'Projects', experience: 'Experience', skills: 'Skills', contact: 'Contact' },
   language: 'Language',
   toLight: 'Switch to light mode',
   toDark: 'Switch to dark mode',
@@ -101,7 +101,7 @@ const EN_UI: Ui = {
     'Learn new stacks quickly, like Power Apps, Dynamics 365 and .NET',
     'Always review, test and own the code that ships',
   ],
-  projectTitle: 'Featured project',
+  projectTitle: 'Featured projects',
   visitWebsite: 'Visit the website',
   appStore: 'Download on the App Store',
   carouselLabel: '{name} screenshots',
@@ -137,7 +137,7 @@ const EN_UI: Ui = {
 const EN: Content = {
   ui: EN_UI,
   profile: PROFILE,
-  project: FEATURED_PROJECT,
+  projects: PROJECTS,
   moreProjects: MORE_PROJECTS,
   experience: EXPERIENCE,
   skills: SKILLS,
@@ -153,7 +153,7 @@ function overlay<T extends object>(base: T[], texts: Partial<T>[]): T[] {
 const IT: Content = {
   ui: {
     mainNav: 'Principale',
-    nav: { about: 'Chi sono', project: 'Progetto', experience: 'Esperienza', skills: 'Competenze', contact: 'Contatti' },
+    nav: { about: 'Chi sono', project: 'Progetti', experience: 'Esperienza', skills: 'Competenze', contact: 'Contatti' },
     language: 'Lingua',
     toLight: 'Passa alla modalità chiara',
     toDark: 'Passa alla modalità scura',
@@ -171,7 +171,7 @@ const IT: Content = {
       'Imparo rapidamente nuovi stack, come Power Apps, Dynamics 365 e .NET',
       'Rivedo, testo e mi assumo sempre la responsabilità del codice che rilascio',
     ],
-    projectTitle: 'Progetto in evidenza',
+    projectTitle: 'Progetti in evidenza',
     visitWebsite: 'Visita il sito',
     appStore: "Scarica dall'App Store",
     carouselLabel: 'Schermate di {name}',
@@ -211,29 +211,49 @@ const IT: Content = {
     about: [
       'Sviluppo applicazioni web professionali con Angular e TypeScript dal 2019. Vengo dal mondo della logistica e dei trasporti e porto ancora le stesse abitudini nel mio codice: affidabilità, senso di responsabilità e consegne puntuali.',
       "Oggi sviluppo funzionalità e risolvo bug su progetti Angular, ampliando le mie competenze nell'ecosistema Microsoft: Power Apps, Dynamics 365, C# e .NET. Uso ogni giorno strumenti moderni di AI e LLM per prototipare più velocemente, rilasciare prima, fare debug in modo più efficace e mantenere alta la qualità del codice.",
-      "Fuori dal lavoro progetto e pubblico i miei prodotti, dall'idea al rilascio. L'ultimo è CommunityBuilds, un'app per appassionati di auto, ora disponibile su App Store e sul web.",
+      "Fuori dal lavoro progetto e pubblico i miei prodotti, dall'idea al rilascio: CommunityBuilds, un'app per appassionati di auto disponibile su App Store e sul web, e Comitiva, una web app che mette un viaggio in auto o un evento aziendale su un'unica pagina condivisibile.",
     ],
   },
-  project: {
-    ...FEATURED_PROJECT,
-    role: 'Ideatore e sviluppatore',
-    status: 'Disponibile su App Store e sul web',
-    summary:
-      'Una piattaforma in cui gli appassionati di auto mostrano le loro auto modificate e personalizzate, documentano ogni modifica e scoprono altri costruttori.',
-    highlights: [
-      "Progettato, sviluppato e lanciato l'intero prodotto, dall'idea al rilascio.",
-      'Feed, esplora, marketplace, classifiche, ricerca, account utente e voti della community sulle auto.',
-      'Pubblicata come app nativa su Apple App Store e come web app responsive.',
-    ],
-    tags: ['Progetto personale', 'Mobile e web', 'Community'],
-    screens: overlay(FEATURED_PROJECT.screens, [
-      { alt: "Schermata iniziale con il logo CommunityBuilds, lo slogan e il pulsante Explore builds" },
-      { alt: 'Schermata Explore con le auto della community come schede con foto' },
-      { alt: 'Pagina di una build con galleria fotografica, titolo e prezzo' },
-      { alt: 'Schermata Rankings con le build più amate' },
-      { alt: 'Schermata Marketplace con filtri per marca, modello, prezzo, chilometraggio e anno' },
-    ]),
-  },
+  projects: overlay(PROJECTS, [
+    {
+      role: 'Ideatore e sviluppatore',
+      status: 'Disponibile su App Store e sul web',
+      summary:
+        'Una piattaforma in cui gli appassionati di auto mostrano le loro auto modificate e personalizzate, documentano ogni modifica e scoprono altri costruttori.',
+      highlights: [
+        "Progettato, sviluppato e lanciato l'intero prodotto, dall'idea al rilascio.",
+        'Feed, esplora, marketplace, classifiche, ricerca, account utente e voti della community sulle auto.',
+        'Pubblicata come app nativa su Apple App Store e come web app responsive.',
+      ],
+      tags: ['Progetto personale', 'Mobile e web', 'Community'],
+      screens: overlay(PROJECTS[0].screens, [
+        { alt: 'Schermata iniziale con il logo CommunityBuilds, lo slogan e il pulsante Explore builds' },
+        { alt: 'Schermata Explore con le auto della community come schede con foto' },
+        { alt: 'Pagina di una build con galleria fotografica, titolo e prezzo' },
+        { alt: 'Schermata Rankings con le build più amate' },
+        { alt: 'Schermata Marketplace con filtri per marca, modello, prezzo, chilometraggio e anno' },
+      ]),
+    },
+    {
+      role: 'Ideatore e sviluppatore',
+      status: 'Online sul web',
+      summary:
+        "Un unico link per un viaggio in auto o un evento aziendale: il percorso o il programma, il piano e dove si trova ciascuno, senza password e senza app da scaricare.",
+      highlights: [
+        "Progettato, sviluppato e lanciato l'intero prodotto, dall'idea al rilascio.",
+        'Viaggi con percorso, check-in a ogni tappa, mappa live facoltativa, meteo e richiesta di aiuto con un tap; eventi con programma, gruppi e camere in hotel.',
+        "Si partecipa con un link o un codice QR e l'organizzatore approva ogni persona. Disponibile in inglese e rumeno.",
+      ],
+      tags: ['Progetto personale', 'Web app', 'Viaggi ed eventi'],
+      screens: overlay(PROJECTS[1].screens, [
+        { alt: 'Schermata iniziale di Comitiva con il titolo "One link. Everyone on the same road." e il pulsante per creare un viaggio o un evento' },
+        { alt: 'Scheda di esempio del viaggio Autumn Run 2026, con il conto alla rovescia della partenza, il punto di ritrovo e le persone iscritte' },
+        { alt: 'Scheda dei viaggi: percorso con tappe, mappa live, meteo e richiesta di aiuto con un tap, per auto e bici' },
+        { alt: 'Un avviso di richiesta di aiuto con la lista dei check-in e le camere d\'hotel a cui ci si può unire' },
+        { alt: 'I tre passaggi: crea il viaggio o l\'evento, condividi un link, ritrovatevi insieme' },
+      ]),
+    },
+  ]),
   moreProjects: overlay(MORE_PROJECTS, [
     { description: 'Tiene traccia dei membri che partecipano a un viaggio in auto.' },
     { description: 'Un tracker delle spese con un back end PostgreSQL.' },
@@ -314,7 +334,7 @@ const IT: Content = {
 const RO: Content = {
   ui: {
     mainNav: 'Principal',
-    nav: { about: 'Despre mine', project: 'Proiect', experience: 'Experiență', skills: 'Abilități', contact: 'Contact' },
+    nav: { about: 'Despre mine', project: 'Proiecte', experience: 'Experiență', skills: 'Abilități', contact: 'Contact' },
     language: 'Limba',
     toLight: 'Treci la tema deschisă',
     toDark: 'Treci la tema întunecată',
@@ -332,7 +352,7 @@ const RO: Content = {
       'Învăț rapid tehnologii noi, precum Power Apps, Dynamics 365 și .NET',
       'Revizuiesc, testez și îmi asum mereu codul pe care îl livrez',
     ],
-    projectTitle: 'Proiect principal',
+    projectTitle: 'Proiecte principale',
     visitWebsite: 'Vizitează site-ul',
     appStore: 'Descarcă din App Store',
     carouselLabel: 'Capturi de ecran {name}',
@@ -372,29 +392,49 @@ const RO: Content = {
     about: [
       'Construiesc aplicații web profesionale cu Angular și TypeScript din 2019. Am venit în programare din logistică și transport și păstrez aceleași obiceiuri în cod: fiabilitate, responsabilitate și livrare la termen.',
       'Astăzi dezvolt funcționalități și rezolv bug-uri în proiecte Angular, extinzându-mă în ecosistemul Microsoft: Power Apps, Dynamics 365, C# și .NET. Folosesc zilnic instrumente moderne de AI și LLM pentru a prototipa mai repede, a livra mai devreme, a depana mai eficient și a menține calitatea codului ridicată.',
-      'În afara serviciului îmi proiectez și lansez propriile produse, de la idee la lansare. Cel mai recent este CommunityBuilds, o aplicație pentru pasionații de mașini, disponibilă acum în App Store și pe web.',
+      'În afara serviciului îmi proiectez și lansez propriile produse, de la idee la lansare: CommunityBuilds, o aplicație pentru pasionații de mașini, disponibilă în App Store și pe web, și Comitiva, o aplicație web care strânge o excursie cu mașina sau un eveniment de echipă pe o singură pagină ușor de distribuit.',
     ],
   },
-  project: {
-    ...FEATURED_PROJECT,
-    role: 'Creator și dezvoltator',
-    status: 'Disponibil în App Store și pe web',
-    summary:
-      'O platformă în care pasionații de mașini își prezintă mașinile modificate și personalizate, documentează fiecare modificare și descoperă alți constructori.',
-    highlights: [
-      'Am proiectat, dezvoltat și lansat întregul produs, de la idee la lansare.',
-      'Feed, explorare, marketplace, clasamente, căutare, conturi de utilizator și voturi din partea comunității pentru mașini.',
-      'Publicată ca aplicație nativă în Apple App Store și ca aplicație web responsive.',
-    ],
-    tags: ['Proiect personal', 'Mobil și web', 'Comunitate'],
-    screens: overlay(FEATURED_PROJECT.screens, [
-      { alt: 'Ecranul principal cu logo-ul CommunityBuilds, sloganul și butonul Explore builds' },
-      { alt: 'Ecranul Explore cu mașinile comunității sub formă de carduri cu fotografii' },
-      { alt: 'Pagina unei mașini cu galerie foto, titlu și preț' },
-      { alt: 'Ecranul Rankings cu cele mai apreciate mașini' },
-      { alt: 'Ecranul Marketplace cu filtre pentru marcă, model, preț, kilometraj și an' },
-    ]),
-  },
+  projects: overlay(PROJECTS, [
+    {
+      role: 'Creator și dezvoltator',
+      status: 'Disponibil în App Store și pe web',
+      summary:
+        'O platformă în care pasionații de mașini își prezintă mașinile modificate și personalizate, documentează fiecare modificare și descoperă alți constructori.',
+      highlights: [
+        'Am proiectat, dezvoltat și lansat întregul produs, de la idee la lansare.',
+        'Feed, explorare, marketplace, clasamente, căutare, conturi de utilizator și voturi din partea comunității pentru mașini.',
+        'Publicată ca aplicație nativă în Apple App Store și ca aplicație web responsive.',
+      ],
+      tags: ['Proiect personal', 'Mobil și web', 'Comunitate'],
+      screens: overlay(PROJECTS[0].screens, [
+        { alt: 'Ecranul principal cu logo-ul CommunityBuilds, sloganul și butonul Explore builds' },
+        { alt: 'Ecranul Explore cu mașinile comunității sub formă de carduri cu fotografii' },
+        { alt: 'Pagina unei mașini cu galerie foto, titlu și preț' },
+        { alt: 'Ecranul Rankings cu cele mai apreciate mașini' },
+        { alt: 'Ecranul Marketplace cu filtre pentru marcă, model, preț, kilometraj și an' },
+      ]),
+    },
+    {
+      role: 'Creator și dezvoltator',
+      status: 'Disponibil pe web',
+      summary:
+        'Un singur link pentru o excursie cu mașina sau un eveniment de echipă: traseul sau agenda, planul și cine unde se află, fără parolă și fără aplicație de descărcat.',
+      highlights: [
+        'Am proiectat, dezvoltat și lansat întregul produs, de la idee la lansare.',
+        'Excursii cu traseu, check-in la fiecare oprire, hartă live opțională, vreme și cerere de ajutor dintr-o atingere; evenimente cu agendă, grupuri și camere de hotel.',
+        'Oamenii se alătură cu un link sau un cod QR, iar organizatorul aprobă fiecare persoană. Disponibilă în engleză și română.',
+      ],
+      tags: ['Proiect personal', 'Aplicație web', 'Excursii și evenimente'],
+      screens: overlay(PROJECTS[1].screens, [
+        { alt: 'Ecranul principal Comitiva cu titlul "One link. Everyone on the same road." și butonul de creare a unei excursii sau a unui eveniment' },
+        { alt: 'Card de exemplu pentru excursia Autumn Run 2026, cu numărătoarea inversă până la plecare, punctul de întâlnire și persoanele înscrise' },
+        { alt: 'Cardul excursiilor: traseu cu opriri, hartă live, vreme și cerere de ajutor dintr-o atingere, pentru mașini și biciclete' },
+        { alt: 'O alertă de cerere de ajutor cu lista check-in-urilor și camerele de hotel la care te poți alătura' },
+        { alt: 'Cei trei pași: creează excursia sau evenimentul, distribuie un link, fiți împreună' },
+      ]),
+    },
+  ]),
   moreProjects: overlay(MORE_PROJECTS, [
     { description: 'Ține evidența membrilor care participă la o excursie cu mașina.' },
     { description: 'Un tracker de cheltuieli cu back end PostgreSQL.' },
